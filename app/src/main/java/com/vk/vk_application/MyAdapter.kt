@@ -21,6 +21,10 @@ class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(items[position])
+
+        holder.itemView.setOnClickListener {
+            deleteItem(position)
+        }
     }
 
     fun setItems(list: List<Int>) {
@@ -32,5 +36,17 @@ class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
     fun addItems(item: Int) {
         items.add(item)
         notifyDataSetChanged()
+    }
+
+    fun deleteItem(position: Int) {
+        if (position in items.indices) {
+            items.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, items.size)
+        }
+    }
+
+    fun getItems(): List<Int> {
+        return items
     }
 }
